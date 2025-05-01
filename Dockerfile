@@ -1,7 +1,7 @@
-FROM alpine:3.21.3
+FROM debian:bookworm
 
 COPY vinkvfxls /usr/local/bin
 
-RUN apk add curl
+RUN apt-get update && apt-get install curl
 
 CMD [ "vinkvfxls" ]
