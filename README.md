@@ -1,5 +1,5 @@
 # vinkvfxls
-Docker image for the Vink VFX License Server. This is the recommended way to run the license server. For offline restricted usage, docs are also available at [docs.vinkvfx.com](https://docs.vinkvfx.com).
+Docker image for the Vink VFX License Server. This is the recommended way to run the license server. For offline restricted usage, docs are also available at [docs.vinkvfx.com](https://docs.vinkvfx.com). It is possible to use either Docker or Podman.
 
 > [!NOTE]  
 > This is only available for the v1.1 version of the license server.
@@ -16,7 +16,7 @@ docker run \
   -p 5082:5082 \
   -p 5083:5083 \
   -e "VINKVFXLS_LICENSES=\"BD2204E2-971F-4FA3-9729-6109C0749923\"" \
-  -e "ACCEPT_EULA=\"true\"" \
+  -e "ACCEPT_VINKVFX_EULA=\"true\"" \
   --health-cmd "CMD, curl, --fail, http://localhost:5083/v1/healthcheck" \
   --health-interval 30s \
   --health-retries 3 \
@@ -35,7 +35,7 @@ services:
       - "5083:5083" # Optional for API requests
     environment:
       - VINKVFXLS_LICENSES="BD2204E2-971F-4FA3-9729-6109C0749923" # For single licenses
-      - ACCEPT_EULA=true
+      - ACCEPT_VINKVFX_EULA=true
     #   - VINKVFXLS_LICENSES="BD2204E2-971F-4FA3-9729-6109C0749923;6652D1B6-D111-4F90-A6A5-C45BF160043D" For multiple licenses
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:5083/v1/healthcheck"]
@@ -49,6 +49,7 @@ Save this text as docker-compose.yaml, and run
 ```bash
 docker compose up -d
 ```
+
 
 You can check its status using the API page: http://your_ip:5083/v1/licenses. Or fetch its logs using docker compose logs vinkvfxls.
 
