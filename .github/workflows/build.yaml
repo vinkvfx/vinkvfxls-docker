@@ -1,0 +1,32 @@
+name: Build Docker
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to build"
+        required: true
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build
+        run: |
+          git clone https://github.com/vinkvfx/vinkvfxls-docker.git
+          cd vinkvfxls-docker
+          ./build.sh ${{ github.event.inputs.version }}
+
+      - name: Push
+        run: |
+          docker push ghcr.io/vinkvfx/vinkvfxls:latest
+          docker push ghcr.io/vinkvfx/vinkvfxls:${{ github.ref_name }}
