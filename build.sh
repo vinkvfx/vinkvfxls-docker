@@ -45,4 +45,4 @@ chmod +x ${executable}
 ${executable} --skip-license --prefix=./build
 mv ./build/bin/vinkvfxls ./
 
-docker build --arch x86_64 . -t ghcr.vinkvfx.com/vinkvfxls:latest -t ghcr.vinkvfx.com/vinkvfxls:${1}
+docker build . -t ghcr.vinkvfx.com/vinkvfxls:latest -t ghcr.vinkvfx.com/vinkvfxls:${1}
