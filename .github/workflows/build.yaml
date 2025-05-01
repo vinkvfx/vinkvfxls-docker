@@ -29,4 +29,4 @@ jobs:
       - name: Push
         run: |
           docker push ghcr.io/vinkvfx/vinkvfxls:latest
-          docker push ghcr.io/vinkvfx/vinkvfxls:${{ github.ref_name }}
+          docker push ghcr.io/vinkvfx/vinkvfxls:${{ github.event.inputs.version }}
