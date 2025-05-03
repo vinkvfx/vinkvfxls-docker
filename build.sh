@@ -45,4 +45,8 @@ chmod +x ${executable}
 ${executable} --skip-license --prefix=./build
 mv ./build/bin/vinkvfxls ./
 
-docker build . -t ghcr.io/vinkvfx/vinkvfxls:latest -t ghcr.io/vinkvfx/vinkvfxls:${1}
+docker build . -t ghcr.io/vinkvfx/vinkvfxls:full-latest -t ghcr.io/vinkvfx/vinkvfxls:full-${1}
+
+slim build --http-probe-off --continue-after 1 --include-exe=curl --include-shell ghcr.io/vinkvfx/vinkvfxls:${1}
+docker tag ghcr.io/vinkvfx/vinkvfxls.slim:latest ghcr.io/vinkvfx/vinkvfxls:latest 
+docker tag ghcr.io/vinkvfx/vinkvfxls.slim:latest ghcr.io/vinkvfx/vinkvfxls:v1.1.3

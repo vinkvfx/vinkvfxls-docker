@@ -20,6 +20,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install Slim
+        run: curl -sL https://raw.githubusercontent.com/slimtoolkit/slim/master/scripts/install-slim.sh | sudo -E bash -
+
       - name: Build
         run: |
           git clone https://github.com/vinkvfx/vinkvfxls-docker.git
@@ -28,5 +31,7 @@ jobs:
 
       - name: Push
         run: |
-          docker push ghcr.io/vinkvfx/vinkvfxls:latest
+          docker push ghcr.io/vinkvfx/vinkvfxls:full-latest
           docker push ghcr.io/vinkvfx/vinkvfxls:${{ github.event.inputs.version }}
+          docker push ghcr.io/vinkvfx/vinkvfxls:latest
+          docker push ghcr.io/vinkvfx/vinkvfxls:full-${{ github.event.inputs.version }}
