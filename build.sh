@@ -1,13 +1,13 @@
 #!/bin/bash
 
-if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 <vinkvfxls version> "
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <vinkvfxls version> <releases-url>"
     exit 1
 fi
 
 echo Building vinkvfxls docker image...
 
-json_data=$(curl -s https://nbg1.your-objectstorage.com/vinkvfx/license-server/releases.json)
+json_data=$(curl -s ${2})
 
 url=$(echo "$json_data" | jq -r --arg version "$1" '.releases[] | select(.version == $version) | .os_release.linux.url')
 if [ -z "${url}" ]; then
@@ -45,8 +45,8 @@ chmod +x ${executable}
 ${executable} --skip-license --prefix=./build
 mv ./build/bin/vinkvfxls ./
 
-docker build . -t ghcr.io/vinkvfx/vinkvfxls:full-latest -t ghcr.io/vinkvfx/vinkvfxls:full-${1}
+docker build . -t ghcr.io/vinkvfx/vinkvfxls:full-latest
 
 slim build --http-probe-off --continue-after 1 --include-exe=curl --include-shell ghcr.io/vinkvfx/vinkvfxls:full-latest
 docker tag ghcr.io/vinkvfx/vinkvfxls.slim:latest ghcr.io/vinkvfx/vinkvfxls:latest 
-docker tag ghcr.io/vinkvfx/vinkvfxls.slim:latest ghcr.io/vinkvfx/vinkvfxls:v1.1.3
+docker tag ghcr.io/vinkvfx/vinkvfxls.slim:latest ghcr.io/vinkvfx/vinkvfxls:${1}
