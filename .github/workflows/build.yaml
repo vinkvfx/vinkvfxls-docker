@@ -27,11 +27,9 @@ jobs:
         run: |
           git clone https://github.com/vinkvfx/vinkvfxls-docker.git
           cd vinkvfxls-docker
-          ./build.sh ${{ github.event.inputs.version }}
+          ./build.sh ${{ github.event.inputs.version }} ${{ secrets.RELEASES_URL }}
 
       - name: Push
         run: |
-          docker push ghcr.io/vinkvfx/vinkvfxls:full-latest
           docker push ghcr.io/vinkvfx/vinkvfxls:${{ github.event.inputs.version }}
           docker push ghcr.io/vinkvfx/vinkvfxls:latest
-          docker push ghcr.io/vinkvfx/vinkvfxls:full-${{ github.event.inputs.version }}
