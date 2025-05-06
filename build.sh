@@ -47,6 +47,6 @@ mv ./build/bin/vinkvfxls ./
 
 docker build . -t ${3}/vinkvfxls:full-latest
 
-slim build --http-probe-off --continue-after 1 --include-exe=curl --include-shell ghcr.io/vinkvfx/vinkvfxls:full-latest
-docker tag ghcr.io/vinkvfx/vinkvfxls.slim:latest ghcr.io/vinkvfx/vinkvfxls:latest 
-docker tag ghcr.io/vinkvfx/vinkvfxls.slim:latest ghcr.io/vinkvfx/vinkvfxls:${1}
+slim build --http-probe-off --continue-after 1 --include-exe=curl --include-shell ${3}/vinkvfxls/vinkvfxls:full-latest
+docker tag ${3}/vinkvfxls/vinkvfxls.slim:latest ${3}/vinkvfxls/vinkvfxls:latest 
+docker tag ${3}/vinkvfxls/vinkvfxls.slim:latest ${3}/vinkvfxls/vinkvfxls:${1}
