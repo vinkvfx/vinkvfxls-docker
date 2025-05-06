@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ "$#" -ne 2 ]; then
-    echo "Usage: $0 <vinkvfxls version> <releases-url>"
+if [ "$#" -ne 3 ]; then
+    echo "Usage: $0 <vinkvfxls version> <releases-url> <registry>"
     exit 1
 fi
 
@@ -45,7 +45,7 @@ chmod +x ${executable}
 ${executable} --skip-license --prefix=./build
 mv ./build/bin/vinkvfxls ./
 
-docker build . -t ghcr.io/vinkvfx/vinkvfxls:full-latest
+docker build . -t ${3}/vinkvfxls:full-latest
 
 slim build --http-probe-off --continue-after 1 --include-exe=curl --include-shell ghcr.io/vinkvfx/vinkvfxls:full-latest
 docker tag ghcr.io/vinkvfx/vinkvfxls.slim:latest ghcr.io/vinkvfx/vinkvfxls:latest 
